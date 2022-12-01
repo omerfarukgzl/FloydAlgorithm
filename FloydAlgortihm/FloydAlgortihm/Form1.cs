@@ -34,8 +34,6 @@ namespace FloydAlgortihm
             button3.Enabled = false;
         }
 
-
-
         private void button1_Click(object sender, EventArgs e) // get node number
         {
 
@@ -192,9 +190,8 @@ namespace FloydAlgortihm
                     for (int k=number-1;k>=0;k--)
                     {                        
                         j = k;
-                        //lineList.Add((j + 1));
                         Debug.Write((i +1) + " ve " + (j+1)+ "arası en kısa mesafe :  ");
-                        while (j >= 0) // foru değiştirdim
+                        while (j >= 0 && i!=j) // foru değiştirdim
                         {                                                    
                             if (j == (graph[i, j] - 1) || j == 0)
                             {
@@ -208,7 +205,14 @@ namespace FloydAlgortihm
                         lineList.Add((i + 1));
                         lineList.Reverse();
                         foreach (int val in lineList)
-                          Debug.Write(val+" ===> ");
+                        {
+                            if(val==lineList.Last())
+                                Debug.Write(val);
+                            else
+                                Debug.Write(val + " ===> ");
+
+                        }
+                          
 
                         lineList.Clear();
                         Debug.WriteLine("");
