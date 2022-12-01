@@ -147,15 +147,12 @@ namespace FloydAlgortihm
                 {
                     if (distance[i, j] == ENDLESS)
                     {
-                       // Console.WriteLine("INF".PadLeft(7));
                         Debug.Write("INF".PadLeft(7));
-                        //label2.Text = label2.Text + "INF".PadLeft(7);
                     }
 
                     else
                     {
-                        // Console.WriteLine(distance[i, j].ToString().PadLeft(7));
-                        //label2.Text = label2.Text + distance[i, j].ToString().PadLeft(7);
+                      
                         Debug.Write(distance[i, j].ToString().PadLeft(7));
                     }
 
@@ -301,52 +298,107 @@ namespace FloydAlgortihm
 
         private void AddComponnet(int number,TextBox[,] textBoxArray,Label[] labelLineArray, Label[] labelCoulmnArray) //  form screen add dynamicly component 
         {
+            int leftStart = 350;
+            int lineDistance = 150;
+            int topStart = 100;
+            int topDistance = 60;
+
+
+
+
+
+
             try
             {
+
+                Label labelInf = new Label
+                {
+                    Location = new System.Drawing.Point(leftStart, topStart-50),
+                    Name = "labelNodeInfo",
+                    //Size = new Size(600, 20),
+                    Text = "Lütfen komşu bağlantısı olmayan düğümler arasına 10000 ve eş düğümler arası mesafeye 0 yazınız(örn: 1 vs 1)"
+                };
+                labelInf.AutoSize = true;
+                labelInf.BringToFront();
+                this.Controls.Add(labelInf);
+
                 for (int i = 0; i < number; i++)
                 {
                     for (int j = 0; j < number; j++)
                     {
-                        if (i == 0)
+                        if (i == 0)//index sayısı text label (satır)
                         {
-                            Label label = new Label();
-                           
-                            label.Location = new System.Drawing.Point(Left + 90 + (150 * j), 150 + (60 * i));
-                            label.Name = "labelNodeCoulmn" + j + 1;
-                            label.Size = new Size(100, 20);
-                            label.Text = "" + (j + 1);
+                            Label label = new Label
+                            {
+                                Location = new System.Drawing.Point( leftStart + 40 + (lineDistance * j), topStart + (topDistance * i)),
+                                Name = "labelNodeCoulmn" + j + 1,
+                                Size = new Size(100, 20),
+                                Text = "" + (j + 1)
+                            };
                             label.BringToFront();
 
                             labelLineArray[j] = label;
                             this.Controls.Add(labelLineArray[j]);
                         }
-
-                        TextBox textadd = new TextBox();
-                      
-                        textadd.Location = new System.Drawing.Point(Left + 50 + (150 * j), 170 + (60 * i));
-                        textadd.Name = "btnNode" + j;
-                        textadd.Size = new Size(100, 20);
+                        // veri girişi text box
+                        TextBox textadd = new TextBox
+                        {
+                            Location = new System.Drawing.Point(leftStart + (lineDistance * j), topStart + 20 + (topDistance * i)),
+                            Name = "btnNode" + j,
+                            Size = new Size(100, 20)
+                        };
                         textadd.BringToFront();
 
                         textBoxArray[i, j] = textadd;
                         this.Controls.Add(textBoxArray[i, j]);
 
                     }
-                    Label label2 = new Label();
-                    
-                    label2.Location = new System.Drawing.Point(Left, 170 + (60 * i));
-                    label2.Name = "labelNodeLine" + i + 1;
-                    label2.Size = new Size(50, 50);
-                    label2.Text = "" + (i + 1);
+                    // index sayısı text label (sutun)
+                    Label label2 = new Label
+                    {
+                        Location = new System.Drawing.Point(leftStart-40, topStart + 20 + (topDistance * i)),
+                        Name = "labelNodeLine" + i + 1,
+                        Size = new Size(50, 50),
+                        Text = "" + (i + 1)
+                    };
                     label2.BringToFront();
 
                     labelCoulmnArray[i] = label2;
                     this.Controls.Add(labelCoulmnArray[i]);
                 }
+
+                Label labelCalculateInf = new Label
+                {
+                    Location = new System.Drawing.Point(leftStart, topStart*number),
+                    Name = "labelCalculateNodeInf",
+                    //Size = new Size(600, 20),
+                    Text = "Lütfen arasındaki mesafeyi hesaplamak istediğiniz iki düğümü giriniz !"
+                };
+                labelCalculateInf.AutoSize = true;
+                labelCalculateInf.BringToFront();
+                this.Controls.Add(labelCalculateInf);
+
+                Button calculateButton = new Button
+                {
+                    Location = new System.Drawing.Point(leftStart, topStart * number+40),
+                    Name = "buttonCalculate",
+                    //Size = new Size(600, 20),
+                    Text = "Hesapla"
+                };
+                calculateButton.Click += (s, e) => {
+                    string count = NodeNumber.Text.ToString();
+                    int number = Convert.ToInt32(count);
+
+                    GraphSoulution(textBoxArray, graph, number);
+                };
+                calculateButton.AutoSize = true;
+                calculateButton.BringToFront();
+                this.Controls.Add(calculateButton);
+
             }
             catch (Exception exception)
             {
-                Console.WriteLine(exception);
+                Debug.WriteLine(exception);
             }
 
         }

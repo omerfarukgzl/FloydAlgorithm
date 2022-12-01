@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Omer\\source\\repos\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj": {}
+    "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Omer\\source\\repos\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj": {
+    "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Omer\\source\\repos\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj",
+        "projectUniqueName": "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj",
         "projectName": "FloydAlgortihm",
-        "projectPath": "C:\\Users\\Omer\\source\\repos\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj",
+        "projectPath": "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj",
         "packagesPath": "C:\\Users\\Omer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Omer\\source\\repos\\FloydAlgortihm\\FloydAlgortihm\\obj\\",
+        "outputPath": "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Omer\\AppData\\Roaming\\NuGet\\NuGet.Config",

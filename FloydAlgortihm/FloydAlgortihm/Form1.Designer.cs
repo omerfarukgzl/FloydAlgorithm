@@ -29,16 +29,18 @@ namespace FloydAlgortihm
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.NodeNumber = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(714, 64);
+            this.button1.Location = new System.Drawing.Point(70, 74);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(156, 23);
             this.button1.TabIndex = 0;
@@ -48,7 +50,7 @@ namespace FloydAlgortihm
             // 
             // NodeNumber
             // 
-            this.NodeNumber.Location = new System.Drawing.Point(714, 35);
+            this.NodeNumber.Location = new System.Drawing.Point(70, 45);
             this.NodeNumber.Name = "NodeNumber";
             this.NodeNumber.Size = new System.Drawing.Size(156, 23);
             this.NodeNumber.TabIndex = 1;
@@ -56,7 +58,7 @@ namespace FloydAlgortihm
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(708, 9);
+            this.label1.Location = new System.Drawing.Point(64, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(162, 15);
             this.label1.TabIndex = 2;
@@ -64,7 +66,7 @@ namespace FloydAlgortihm
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(795, 93);
+            this.button2.Location = new System.Drawing.Point(151, 103);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -74,13 +76,18 @@ namespace FloydAlgortihm
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(714, 92);
+            this.button3.Location = new System.Drawing.Point(70, 102);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 4;
             this.button3.Text = "Hesapla";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // Form1
             // 
@@ -107,6 +114,7 @@ namespace FloydAlgortihm
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 
