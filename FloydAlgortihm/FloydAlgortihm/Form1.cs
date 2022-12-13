@@ -67,7 +67,176 @@ namespace FloydAlgortihm
 
         }
 
-       
+        private void AddComponnet(int number, TextBox[,] textBoxArray, Label[] labelLineArray, Label[] labelCoulmnArray) //  form screen add dynamicly component 
+        {
+            //dynamic oluşturulacak componentlerin base location bilgileri
+            int leftStart = 400;
+            int lineDistance = 150;
+            int topStart = 100;
+            int topDistance = 60;
+
+            try
+            {
+                // sonsuz ve sıfır yazılacak düğüm bilgileri info
+                Label labelInf = new Label
+                {
+                    Location = new System.Drawing.Point(leftStart, topStart - 50),
+                    Name = "labelNodeInfo",
+                    Text = "Lütfen komşu bağlantısı olmayan düğümler arasına 9999 ve eş düğümler arası mesafeye 0 yazınız(örn: 1 vs 1)"
+                };
+                labelInf.AutoSize = true;
+                labelInf.BringToFront();
+                this.Controls.Add(labelInf);
+
+                // girilen düğüm sayısına göre oluşturulacak kare matris
+                for (int i = 0; i < number; i++)
+                {
+                    for (int j = 0; j < number; j++)
+                    {
+                        if (i == 0)//index sayısı text label (satır)
+                        {
+                            // satırca yazılan index bilgileri içeren label lar
+                            Label label = new Label
+                            {
+                                Location = new System.Drawing.Point(leftStart + 40 + (lineDistance * j), topStart + (topDistance * i)),
+                                Name = "labelNodeCoulmn" + j + 1,
+                                Size = new Size(100, 20),
+                                Text = "" + (j + 1)
+                            };
+                            label.BringToFront();
+
+                            labelLineArray[j] = label;
+                            this.Controls.Add(labelLineArray[j]);
+                        }
+
+                        // veri girişi text box
+                        TextBox textadd = new TextBox
+                        {
+                            Location = new System.Drawing.Point(leftStart + (lineDistance * j), topStart + 20 + (topDistance * i)),
+                            Name = "btnNode" + j,
+                            Size = new Size(100, 20)
+                        };
+                        textadd.BringToFront();
+
+                        textBoxArray[i, j] = textadd;
+                        this.Controls.Add(textBoxArray[i, j]);
+                    }
+                    // index sayısı text label (sutun)
+                    Label label2 = new Label
+                    {
+                        Location = new System.Drawing.Point(leftStart - 40, topStart + 20 + (topDistance * i)),
+                        Name = "labelNodeLine" + i + 1,
+                        Size = new Size(50, 50),
+                        Text = "" + (i + 1)
+                    };
+                    label2.BringToFront();
+
+                    labelCoulmnArray[i] = label2;
+                    this.Controls.Add(labelCoulmnArray[i]);
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception);
+            }
+        }
+
+
+
+
+
+
+        private void button2_Click(object sender, EventArgs e) // Reset Floyd Graph
+        {
+            string count = NodeNumber.Text.ToString();
+            int number = Convert.ToInt32(count);
+            for (int i = 0; i < number; i++)
+            {
+                for (int j = 0; j < number; j++)
+                {
+                    this.Controls.Remove(textBoxArray[i, j]);
+                    textBoxArray[i, j] = null;
+                }
+                this.Controls.Remove(labelCoulmnArray[i]);
+                this.Controls.Remove(labelLineArray[i]);
+                labelCoulmnArray[i] = null;
+                labelLineArray[i] = null;
+            }
+
+            button1.Enabled = true;
+            label1.Enabled = true;
+            NodeNumber.Enabled = true;
+            groupBox1.Enabled = false;
+            button2.Enabled = false;
+        }
+
+        private void button3_Click(object sender, EventArgs e) // Calculate Button
+        {
+            string count = NodeNumber.Text.ToString();
+            int number = Convert.ToInt32(count);
+
+            GraphSoulution(textBoxArray, graph, number);
+        }
+
+        private void GraphSoulution(TextBox[,] textBoxArray, int[,] graph, int number) // graph soulution 
+        {
+            // girilen matris bilgilerinin değerlerini çözümleyip verilerin atanmasının yapılması ( eksik bilgi  varsa uyarı da bulunn)
+            for (int i = 0; i < number; i++)
+            {
+                for (int j = 0; j < number; j++)
+                {
+                    if (textBoxArray[i, j].Text.Length > 0)
+                    {
+                        try
+                        {
+                            int value = Convert.ToInt32(textBoxArray[i, j].Text);
+                            graph[i, j] = value;
+                            if (i != j)
+                                graphLine[j, i] = i + 1;
+                            else
+                                graphLine[i, j] = 0;
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Lütfen Düğümler Arası Bağlantı Bilgilerini eksiksiz ve tam sayı değerleri giriniz", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lütfen Düğümler Arası Bağlantı Bilgilerini eksiksiz ve tam sayı değerleri giriniz", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+            FloydWarshall(graph, graphLine, number);
+        }
+
+        private void FloydWarshall(int[,] graph, int[,] graphLine, int number)
+        {
+            int[,] distance = new int[number, number];
+
+            for (int i = 0; i < number; ++i)
+                for (int j = 0; j < number; ++j)
+                    distance[i, j] = graph[i, j];
+
+            for (int k = 0; k < number; ++k)
+            {
+                for (int i = 0; i < number; ++i)
+                {
+                    for (int j = 0; j < number; ++j)
+                    {
+                        if (distance[i, k] + distance[k, j] < distance[i, j] && i!=j)
+                        {
+                            distance[i, j] = distance[i, k] + distance[k, j];
+                            graphLine[i, j] = k+1;
+                        }                           
+                    }
+                }
+            }
+            //Print(distance, number);            
+            PrintNodebyNodeShortestLineNumber(distance,graphLine);
+           // PrintNodebyNodeShortestLine(graphLine, number);          
+        }
         // En kısa yol mesafe uzunluğu
         private void PrintNodebyNodeShortestLineNumber(int[,] graph, int[,] graphLine)
         {
@@ -101,32 +270,6 @@ namespace FloydAlgortihm
             }
         }
 
-        private void FloydWarshall(int[,] graph, int[,] graphLine, int number)
-        {
-            int[,] distance = new int[number, number];
-
-            for (int i = 0; i < number; ++i)
-                for (int j = 0; j < number; ++j)
-                    distance[i, j] = graph[i, j];
-
-            for (int k = 0; k < number; ++k)
-            {
-                for (int i = 0; i < number; ++i)
-                {
-                    for (int j = 0; j < number; ++j)
-                    {
-                        if (distance[i, k] + distance[k, j] < distance[i, j] && i!=j)
-                        {
-                            distance[i, j] = distance[i, k] + distance[k, j];
-                            graphLine[i, j] = k+1;
-                        }                           
-                    }
-                }
-            }
-            //Print(distance, number);            
-            PrintNodebyNodeShortestLineNumber(distance,graphLine);
-           // PrintNodebyNodeShortestLine(graphLine, number);          
-        }
         private void CalculateGraphLine(int[,]graphLine)
         {           
             if (textBox1.Text.Length > 0 && textBox2.Text.Length>0)
@@ -160,9 +303,9 @@ namespace FloydAlgortihm
                     lineList.Reverse();
                     foreach (int val in lineList)
                     {
-                        if (nodeDistanceLabel.Text.Length > 40)
+                        if (nodeDistanceLabel.Text.Length % 40==0)
                             nodeDistanceLabel.Text = nodeDistanceLabel.Text + Environment.NewLine;
-                        if (val == lineList.Last())
+                        if (val == lineList.Last()) // en sona gelindiyse
                         {
                             Debug.Write(val);
                             nodeDistanceLabel.Text = nodeDistanceLabel.Text + val ;
@@ -187,143 +330,14 @@ namespace FloydAlgortihm
                 return;
             }
         }
-        private void GraphSoulution(TextBox [,]textBoxArray, int[,] graph, int number) // graph soulution 
-        {
-            // girilen matris bilgilerinin değerlerini çözümleyip verilerin atanmasının yapılması ( eksik bilgi  varsa uyarı da bulunn)
-            for (int i = 0; i < number; i++)
-            {
-                for (int j = 0; j < number; j++)
-                {
-                    if (textBoxArray[i,j].Text.Length>0)
-                    {
-                        try
-                        {
-                            int value = Convert.ToInt32(textBoxArray[i, j].Text);
-                            graph[i, j] = value;
-                            if (i != j)
-                                graphLine[j, i] = i+1;
-                            else
-                                graphLine[i, j] = 0;
-                        }
-                        catch 
-                        {
-                            MessageBox.Show("Lütfen Düğümler Arası Bağlantı Bilgilerini eksiksiz ve tam sayı değerleri giriniz", "Eksik Bilgi",MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Lütfen Düğümler Arası Bağlantı Bilgilerini eksiksiz ve tam sayı değerleri giriniz", "Eksik Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-            }
-            FloydWarshall(graph, graphLine, number);
-        }
-        private void AddComponnet(int number,TextBox[,] textBoxArray,Label[] labelLineArray, Label[] labelCoulmnArray) //  form screen add dynamicly component 
-        {
-            //dynamic oluşturulacak componentlerin base location bilgileri
-            int leftStart = 400;
-            int lineDistance = 150;
-            int topStart = 100;
-            int topDistance = 60;
 
-            try
-            {
-                // sonsuz ve sıfır yazılacak düğüm bilgileri info
-                Label labelInf = new Label
-                {
-                    Location = new System.Drawing.Point(leftStart, topStart-50),
-                    Name = "labelNodeInfo",
-                    Text = "Lütfen komşu bağlantısı olmayan düğümler arasına 9999 ve eş düğümler arası mesafeye 0 yazınız(örn: 1 vs 1)"
-                };
-                labelInf.AutoSize = true;
-                labelInf.BringToFront();
-                this.Controls.Add(labelInf);
 
-                // girilen düğüm sayısına göre oluşturulacak kare matris
-                for (int i = 0; i < number; i++)
-                {
-                    for (int j = 0; j < number; j++)
-                    {
-                        if (i == 0)//index sayısı text label (satır)
-                        {
-                            // satırca yazılan index bilgileri içeren label lar
-                            Label label = new Label
-                            {
-                                Location = new System.Drawing.Point( leftStart + 40 + (lineDistance * j), topStart + (topDistance * i)),
-                                Name = "labelNodeCoulmn" + j + 1,
-                                Size = new Size(100, 20),
-                                Text = "" + (j + 1)
-                            };
-                            label.BringToFront();
 
-                            labelLineArray[j] = label;
-                            this.Controls.Add(labelLineArray[j]);
-                        }
 
-                        // veri girişi text box
-                        TextBox textadd = new TextBox
-                        {
-                            Location = new System.Drawing.Point(leftStart + (lineDistance * j), topStart + 20 + (topDistance * i)),
-                            Name = "btnNode" + j,
-                            Size = new Size(100, 20)
-                        };
-                        textadd.BringToFront();
 
-                        textBoxArray[i, j] = textadd;
-                        this.Controls.Add(textBoxArray[i, j]);
-                    }
-                    // index sayısı text label (sutun)
-                    Label label2 = new Label
-                    {
-                        Location = new System.Drawing.Point(leftStart-40, topStart + 20 + (topDistance * i)),
-                        Name = "labelNodeLine" + i + 1,
-                        Size = new Size(50, 50),
-                        Text = "" + (i + 1)
-                    };
-                    label2.BringToFront();
 
-                    labelCoulmnArray[i] = label2;
-                    this.Controls.Add(labelCoulmnArray[i]);
-                }
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine(exception);
-            }
-        }
+        
 
-        private void button2_Click(object sender, EventArgs e) // Reset Floyd Graph
-        {
-            string count = NodeNumber.Text.ToString();
-            int number = Convert.ToInt32(count);
-            for (int i = 0; i < number; i++)
-            {
-                for (int j = 0; j < number; j++)
-                {
-                    this.Controls.Remove(textBoxArray[i, j]);
-                    textBoxArray[i, j] = null;                   
-                }
-                this.Controls.Remove(labelCoulmnArray[i]);
-                this.Controls.Remove(labelLineArray[i]);
-                labelCoulmnArray[i] = null;
-                labelLineArray[i] = null;
-            }
-
-            button1.Enabled = true;
-            label1.Enabled = true;
-            NodeNumber.Enabled = true;
-            groupBox1.Enabled = false;
-            button2.Enabled = false;
-        }
-
-        private void button3_Click(object sender, EventArgs e) // Calculate Button
-        {
-            string count = NodeNumber.Text.ToString();
-            int number = Convert.ToInt32(count);
-
-            GraphSoulution(textBoxArray,graph, number);
-        }
     }
     /* private void Print(int[,] distance, int verticesCount)
         {
