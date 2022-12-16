@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj",
-      "projectName": "FloydAlgortihm",
-      "projectPath": "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm.csproj",
+      "projectUniqueName": "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgorithm\\FloydAlgorithm\\FloydAlgortihm\\FloydAlgorithm.csproj",
+      "projectName": "FloydAlgorithm",
+      "projectPath": "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgorithm\\FloydAlgorithm\\FloydAlgortihm\\FloydAlgorithm.csproj",
       "packagesPath": "C:\\Users\\Omer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgortihm\\FloydAlgortihm\\FloydAlgortihm\\obj\\",
+      "outputPath": "C:\\Users\\Omer\\Documents\\GitHub\\FloydAlgorithm\\FloydAlgorithm\\FloydAlgortihm\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Omer\\AppData\\Roaming\\NuGet\\NuGet.Config",
